@@ -1,5 +1,7 @@
 import requests
 
+from conf import WEATHER_API_KEY
+
 
 def get_locaiton():
     url = 'https://ipapi.co/json'
@@ -10,12 +12,11 @@ def get_locaiton():
 
 
 def get_weather(lat, lon):
-    api_key = '1fe9aedb297f1fdc3c682b1522d66aa6'
     weather_url = 'https://api.openweathermap.org/data/2.5/onecall'
     resp = requests.get(weather_url, params={
         'lat': lat,
         'lon': lon,
-        'appid': api_key,
+        'appid': WEATHER_API_KEY,
         'units': 'metric'
     })
     return resp.json()
