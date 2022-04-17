@@ -55,7 +55,7 @@ class WeatherDataService:
                 existing.humidity = humidity
                 existing.wind_speed = wind_speed
                 existing.created_at = datetime.now()
-                self.session.update(existing)
+                self.session.add(existing)
             except Exception as ex:
                 weather = WeatherForecast(
                     city=city,
