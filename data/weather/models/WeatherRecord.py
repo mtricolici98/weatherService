@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import Column, Integer, DateTime, String
+from sqlalchemy import Column, Integer, DateTime, String, Date
 
 from data.database import Base
 
@@ -39,7 +39,7 @@ class WeatherForecast(Base):
     condition = Column(String)
     humidity = Column(String)
     wind_speed = Column(String)
-    for_date = Column(DateTime)
+    for_date = Column(Date)
     created_at = Column(DateTime, default=datetime.now())
 
     def __repr__(self):
