@@ -20,7 +20,7 @@ def set_webhook():
     api_key = VIBER_AUTH_TOKEN
     resp = requests.post(url,
                          data=json.dumps({
-                             'url': f'https://fast-citadel-78236.herokuapp.com/viber',
+                             'url': f'https://cryptic-hollows-76455.herokuapp.com/viber',
                              "event_types": [
                                  "delivered",
                                  "seen",

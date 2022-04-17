@@ -10,6 +10,7 @@ class WeatherDataService:
         self.session = session or Session()
 
     def from_one_call_json(self, city, data):
+
         current = self.register_weather(city, data['current'])
         for a in data['daily']:
             self.register_weather(city, a)
