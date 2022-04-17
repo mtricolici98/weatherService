@@ -92,4 +92,4 @@ def receive_command(message_req: ViberMessageRequest):
         if user_message.lower().strip() == '/start':
             return get_init_loc()
     else:
-        get_welcome()
+        return get_welcome()
