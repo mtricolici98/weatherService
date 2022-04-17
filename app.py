@@ -6,6 +6,12 @@ from web_service.weather_service import weather_data_blueprint
 
 app = Flask(__name__)
 
+
+@app.route('/')
+def welcome():
+    return '<h1>Welcome to the weather app</h1>'
+
+
 app.register_blueprint(weather_data_blueprint)
 app.register_blueprint(viber_bot_blueprint)
 
