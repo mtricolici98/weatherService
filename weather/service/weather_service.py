@@ -16,7 +16,7 @@ def get_weather(lat, lon):
     return resp.json()
 
 
-def get_weather_data(city, lat, lon):
+def get_weather_current_data(city, lat, lon):
     wds = WeatherDataService()
     existing = wds.get_within_15_minutes_from_db(city)
     if existing:
@@ -24,3 +24,13 @@ def get_weather_data(city, lat, lon):
     weather = get_weather(lat, lon)
     result = WeatherDataService().from_one_call_json(city, weather)
     return str(result)
+
+
+def get_weather_forecast_data(city, lat, lon):
+    wds = WeatherDataService()
+    existing = wds.get_forecast_from_1_hour(city)
+    if existing:
+        return "\n\n".join(str(e) for e in existing)
+    weather = get_weather(lat, lon)
+    WeatherDataService().from_one_call_json(city, weather)
+    return "\n\n".join(wds.get_forecast_from_1_hour(city))

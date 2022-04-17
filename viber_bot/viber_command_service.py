@@ -4,7 +4,8 @@ from viberbot.api.viber_requests import ViberMessageRequest
 from data.weather.service.LocationService import LocationSessionService
 from logger import logger
 from weather.service.location_service import get_coord_from_city, get_location_from_viber_location
-from weather.service.weather_service import get_weather_data
+from weather.service.weather_service import get_weather_current_data
+from web_service.weather_service import get_forecast_weather
 
 
 def register_location(message_req: ViberMessageRequest):
@@ -33,7 +34,16 @@ def get_current_data(user_id):
     session_info = lss.get_session_for_user(user_id)
     if not session_info:
         return get_init_loc()
-    return TextMessage(text=get_weather_data(session_info.city, session_info.lat, session_info.lon),
+    return TextMessage(text=get_weather_current_data(session_info.city, session_info.lat, session_info.lon),
+                       tracking_data='weather_info')
+
+
+def get_forecast_data(user_id):
+    lss = LocationSessionService()
+    session_info = lss.get_session_for_user(user_id)
+    if not session_info:
+        return get_init_loc()
+    return TextMessage(text=get_forecast_weather(session_info.city, session_info.lat, session_info.lon),
                        tracking_data='weather_info')
 
 
@@ -98,7 +108,7 @@ def receive_command(message_req: ViberMessageRequest):
         if user_message == 'current':
             return [get_current_data(message_req.sender.id), get_menu()]
         elif user_message == 'forecast':
-            return get_menu()
+            return [get_forecast_data(message_req.sender.id), get_menu()]
         elif user_message == 'change_location':
             re_init_location(message_req.sender.id)
             return get_init_loc()

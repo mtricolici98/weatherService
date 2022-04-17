@@ -65,3 +65,14 @@ class WeatherDataService:
                 WeatherRecord.city == city).one()
         except Exception as ex:
             return None
+
+    def get_forecast_from_1_hour(self, city):
+        try:
+            from sqlalchemy.sql.functions import max
+            return self.session.query(WeatherForecast).filter(
+                WeatherForecast.created_at >= datetime.now() - timedelta(hours=1)).filter(
+                WeatherForecast.city == city).filter(WeatherForecast.for_date > datetime.now()).filter(
+                WeatherForecast.created_at == max(WeatherForecast.created_at)) \
+                .order_by(WeatherForecast.for_date)
+        except Exception as ex:
+            return None
