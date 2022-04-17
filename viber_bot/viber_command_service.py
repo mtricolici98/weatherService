@@ -4,8 +4,7 @@ from viberbot.api.viber_requests import ViberMessageRequest
 from data.weather.service.LocationService import LocationSessionService
 from logger import logger
 from weather.service.location_service import get_coord_from_city, get_location_from_viber_location
-from weather.service.weather_service import get_weather_current_data
-from web_service.weather_service import get_forecast_weather
+from weather.service.weather_service import get_weather_current_data, get_weather_forecast_data
 
 
 def register_location(message_req: ViberMessageRequest):
@@ -43,7 +42,7 @@ def get_forecast_data(user_id):
     session_info = lss.get_session_for_user(user_id)
     if not session_info:
         return get_init_loc()
-    return TextMessage(text=get_forecast_weather(session_info.city, session_info.lat, session_info.lon),
+    return TextMessage(text=get_weather_forecast_data(session_info.city, session_info.lat, session_info.lon),
                        tracking_data='weather_info')
 
 
