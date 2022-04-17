@@ -9,7 +9,7 @@ from viber_bot.viber_command_service import receive_command
 viber_bot_blueprint = Blueprint('viber_bot_blueprint', __name__)
 
 
-@viber_bot_blueprint.route('/viber')
+@viber_bot_blueprint.route('/viber', methods=['POST'])
 def incoming():
     logger.debug("received request. post data: {0}".format(request.get_data()))
     # every viber message is signed, you can verify the signature using this method
