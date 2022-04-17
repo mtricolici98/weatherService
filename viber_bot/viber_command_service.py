@@ -1,8 +1,6 @@
 from viberbot.api.messages import TextMessage, KeyboardMessage, LocationMessage
-from viberbot.api.user_profile import UserProfile
 from viberbot.api.viber_requests import ViberMessageRequest
 
-from data.weather.models.LocationSession import LocationSession
 from data.weather.service.LocationService import LocationSessionService
 from logger import logger
 from weather.service.location_service import get_coord_from_city, get_location_from_viber_location
@@ -55,7 +53,7 @@ def get_menu():
                 "ActionType": "reply",
                 "ActionBody": "change_location",
                 "ReplyType": "message",
-                "Text": "Current weather"
+                "Text": "Change my location"
             },
             {
                 "Columns": 3,
@@ -102,7 +100,8 @@ def receive_command(message_req: ViberMessageRequest):
         elif user_message == 'forecast':
             return get_menu()
         elif user_message == 'change_location':
-            return [re_init_location(message_req.sender.id), get_init_loc()]
+            re_init_location(message_req.sender.id)
+            return get_init_loc()
     elif tracking_data and tracking_data == 'register_location':
         return register_location(message_req)
     elif tracking_data and tracking_data == 'welcome':

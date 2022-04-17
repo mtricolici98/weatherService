@@ -20,7 +20,7 @@ def get_weather_data(city, lat, lon):
     wds = WeatherDataService()
     existing = wds.get_within_15_minutes_from_db(city)
     if existing:
-        return existing
+        return str(existing)
     weather = get_weather(lat, lon)
     result = WeatherDataService().from_one_call_json(city, weather)
     return str(result)
