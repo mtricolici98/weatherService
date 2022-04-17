@@ -42,8 +42,11 @@ def get_forecast_data(user_id):
     session_info = lss.get_session_for_user(user_id)
     if not session_info:
         return get_init_loc()
-    return TextMessage(text=get_weather_forecast_data(session_info.city, session_info.lat, session_info.lon),
-                       tracking_data='weather_info')
+    forecasts = get_weather_forecast_data(session_info.city, session_info.lat, session_info.lon)
+    messages = []
+    for forecast in forecasts:
+        messages.append(TextMessage(text=str(forecast), tracking_data='weather_info'))
+    return messages, get_menu()
 
 
 def re_init_location(user_id):
@@ -107,7 +110,7 @@ def receive_command(message_req: ViberMessageRequest):
         if user_message == 'current':
             return [get_current_data(message_req.sender.id), get_menu()]
         elif user_message == 'forecast':
-            return [get_forecast_data(message_req.sender.id), get_menu()]
+            return get_forecast_data(message_req.sender.id)
         elif user_message == 'change_location':
             re_init_location(message_req.sender.id)
             return get_init_loc()
