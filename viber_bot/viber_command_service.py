@@ -46,7 +46,7 @@ def get_forecast_data(user_id):
     messages = []
     for forecast in forecasts:
         messages.append(TextMessage(text=str(forecast), tracking_data='weather_info'))
-    return messages, get_menu()
+    return messages + [get_menu()]
 
 
 def re_init_location(user_id):
