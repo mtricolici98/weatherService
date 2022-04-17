@@ -33,4 +33,5 @@ class WeatherDataService:
             created_at=datetime.now()
         )
         self.session.add(weather)
+        self.session.commit()
         return weather
