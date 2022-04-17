@@ -62,9 +62,9 @@ def get_init_loc(error=False):
 
 
 def receive_command(message_req: ViberMessageRequest):
-    user_message = message_req.message.text
     tracking_data = message_req.message.tracking_data
     if tracking_data and tracking_data == 'weather_info':
+        user_message = message_req.message.text
         if user_message == 'current':
             return get_menu()
         elif user_message == 'forecast':
@@ -72,7 +72,7 @@ def receive_command(message_req: ViberMessageRequest):
     elif tracking_data and tracking_data == 'register_location':
         if isinstance(message_req.message, TextMessage):
             try:
-                info = get_coord_from_city(user_message)
+                info = get_coord_from_city(message_req.message.text)
                 lss = LocationSessionService()
                 lss.register_user_session(message_req.sender.id, *info)
                 return get_menu()
