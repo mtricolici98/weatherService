@@ -4,7 +4,7 @@ from data import Base
 
 
 class LocationSession(Base):
-    __tablename__ = 'weather'
+    __tablename__ = 'location_session'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(String)
