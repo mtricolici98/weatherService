@@ -9,6 +9,11 @@ def get_weather(lat, lon):
         'lat': lat,
         'lon': lon,
         'appid': WEATHER_API_KEY,
-        'units': 'metric'
+        'units': 'metric',
+        'exclude': ['minutely', 'hourly', 'alerts']
     })
     return resp.json()
+
+
+def get_weather_data(city, lat, lon):
+    weather = get_weather(lat, lon)

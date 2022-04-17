@@ -17,6 +17,7 @@ class WeatherRecord(Base):
     condition = Column(String)
     humidity = Column(String)
     wind_speed = Column(String)
+    for_date = Column(DateTime, null=False)
     created_at = Column(DateTime, default=datetime.now())
 
     def __repr__(self):
