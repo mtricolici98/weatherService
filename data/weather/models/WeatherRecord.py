@@ -1,7 +1,6 @@
 from datetime import datetime
-from tokenize import String
 
-from sqlalchemy import Column, Integer, DateTime
+from sqlalchemy import Column, Integer, DateTime, String
 
 from data.database import Base
 
@@ -17,11 +16,11 @@ class WeatherRecord(Base):
     condition = Column(String)
     humidity = Column(String)
     wind_speed = Column(String)
-    for_date = Column(DateTime, null=False)
+    for_date = Column(DateTime)
     created_at = Column(DateTime, default=datetime.now())
 
     def __repr__(self):
-        return f"Weather in {self.city}, {self.country}: {self.condition}, {self.temperature}C (feels like)" \
+        return f"Weather in {self.city}: {self.condition}, {self.temperature}C (feels like)" \
                f" {self.feels_like}, wind speed {self.wind_speed} with humidity: {self.humidity}." \
                f" Data since {self.created_at.strftime('dd/MM/YY HH:mm')}."
 

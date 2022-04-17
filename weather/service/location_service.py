@@ -4,8 +4,7 @@ from viberbot.api.messages import LocationMessage, TextMessage
 from conf import WEATHER_API_KEY
 
 
-def find_location_by_ip(request):
-    ip_addr = request.remote_addr
+def find_location_by_ip(ip_addr):
     return get_location_by_ip_addr(ip_addr)
 
 
@@ -29,8 +28,7 @@ def get_coord_from_city(locationInfo):
     url = f'http://api.openweathermap.org/geo/1.0/direct?q={locationInfo}&appid={WEATHER_API_KEY}'
     data = requests.get(url)
     info = data.json()
-    location_info = info[0]['name']
-    return location_info[0]['name'], location_info[0]['lat'], location_info[0]['lon']
+    return info[0]['name'], info[0]['lat'], info[0]['lon']
 
 
 def get_location_from_viber_location(viber_message: LocationMessage):

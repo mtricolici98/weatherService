@@ -1,6 +1,7 @@
 import requests
 
 from conf import WEATHER_API_KEY
+from data.weather.service.WeatherDataService import WeatherDataService
 
 
 def get_weather(lat, lon):
@@ -17,3 +18,5 @@ def get_weather(lat, lon):
 
 def get_weather_data(city, lat, lon):
     weather = get_weather(lat, lon)
+    result = WeatherDataService().from_one_call_json(city, weather)
+    return str(result)
