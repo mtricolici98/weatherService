@@ -10,6 +10,6 @@ app.register_blueprint(weather_data_blueprint)
 app.register_blueprint(viber_bot_blueprint)
 
 
-@app.before_first_request()
+@app.before_first_request
 def init_webhook():
     set_webhook()
