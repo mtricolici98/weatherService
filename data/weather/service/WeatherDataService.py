@@ -38,7 +38,7 @@ class WeatherDataService:
 
     def register_forecast(self, city, data):
         for_date = datetime.fromtimestamp(data['dt'])
-        for when in data['temp'].keys():
+        for when in data['feels_like'].keys():
             temp = data['temp'][when]
             feels_like = data['feels_like'][when]
             condition = f"{data['weather'][0]['main']}, {data['weather'][0]['description']}"
