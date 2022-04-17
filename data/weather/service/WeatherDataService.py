@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from data.database import Session
 from data.weather.models.WeatherRecord import WeatherRecord, WeatherForecast
@@ -57,3 +57,11 @@ class WeatherDataService:
             )
             self.session.add(weather)
         self.session.commit()
+
+    def get_within_15_minutes_from_db(self, city):
+        try:
+            return self.session.query(WeatherRecord).filter(
+                WeatherRecord.created_at >= datetime.now() - timedelta(minutes=15)).filter(
+                WeatherRecord.city == city).one()
+        except Exception as ex:
+            return None

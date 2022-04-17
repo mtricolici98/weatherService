@@ -6,10 +6,42 @@ from data.weather.models.LocationSession import LocationSession
 from data.weather.service.LocationService import LocationSessionService
 from logger import logger
 from weather.service.location_service import get_coord_from_city, get_location_from_viber_location
+from weather.service.weather_service import get_weather_data
 
 
-def register_location(message: ViberMessageRequest, sender: UserProfile):
-    return TextMessage(text='Order placed')
+def register_location(message_req: ViberMessageRequest):
+    if isinstance(message_req.message, TextMessage):
+        try:
+            info = get_coord_from_city(message_req.message.text)
+            lss = LocationSessionService()
+            lss.register_user_session(message_req.sender.id, *info)
+            return get_menu()
+        except Exception as ex:
+            logger.exceptiion(ex)
+            return get_init_loc(error=True)
+    elif isinstance(message_req.message, LocationMessage):
+        try:
+            info = get_location_from_viber_location(message_req.message)
+            lss = LocationSessionService()
+            lss.register_user_session(message_req.sender.id, *info)
+            return get_menu()
+        except Exception as ex:
+            logger.exceptiion(ex)
+            return get_init_loc(error=True)
+
+
+def get_current_data(user_id):
+    lss = LocationSessionService()
+    session_info = lss.get_session_for_user(user_id)
+    if not session_info:
+        return get_init_loc()
+    return TextMessage(text=get_weather_data(session_info.city, session_info.lat, session_info.lon),
+                       tracking_data='weather_info')
+
+
+def re_init_location(user_id):
+    lss = LocationSessionService()
+    lss.delete_session_for_user(user_id)
 
 
 def get_menu():
@@ -39,7 +71,7 @@ def get_menu():
                 "Rows": 1,
                 "BgColor": "#e6f5ff",
                 "ActionType": "reply",
-                "ActionBody": "current",
+                "ActionBody": "forecast",
                 "ReplyType": "message",
                 "Text": "Forecast"
             },
@@ -66,28 +98,13 @@ def receive_command(message_req: ViberMessageRequest):
     if tracking_data and tracking_data == 'weather_info':
         user_message = message_req.message.text
         if user_message == 'current':
-            return get_menu()
+            return [get_current_data(message_req.sender.id), get_menu()]
         elif user_message == 'forecast':
             return get_menu()
+        elif user_message == 'change_location':
+            return [re_init_location(message_req.sender.id), get_init_loc()]
     elif tracking_data and tracking_data == 'register_location':
-        if isinstance(message_req.message, TextMessage):
-            try:
-                info = get_coord_from_city(message_req.message.text)
-                lss = LocationSessionService()
-                lss.register_user_session(message_req.sender.id, *info)
-                return get_menu()
-            except Exception as ex:
-                logger.exceptiion(ex)
-                return get_init_loc(error=True)
-        elif isinstance(message_req.message, LocationMessage):
-            try:
-                info = get_location_from_viber_location(message_req.message)
-                lss = LocationSessionService()
-                lss.register_user_session(message_req.sender.id, *info)
-                return get_menu()
-            except Exception as ex:
-                logger.exceptiion(ex)
-                return get_init_loc(error=True)
+        return register_location(message_req)
     elif tracking_data and tracking_data == 'welcome':
         if message_req.message.text.lower().strip() == '/start':
             return get_init_loc()
