@@ -22,7 +22,7 @@ if not DATABASE_URL:
         DATABASE_URL = conf['DATABASE_URL']
 
 if not VIBER_AUTH_TOKEN:
-    token = os.getenv("VIBER_AUTH_TOKEN")  # postgres is the default database, you can create more databases
-    if not token:
+    VIBER_AUTH_TOKEN = os.getenv("VIBER_AUTH_TOKEN")  # postgres is the default database, you can create more databases
+    if not VIBER_AUTH_TOKEN:
         conf = get_config_from_file()
         VIBER_AUTH_TOKEN = conf['VIBER_AUTH_TOKEN']
