@@ -20,9 +20,9 @@ class WeatherRecord(Base):
     created_at = Column(DateTime, default=datetime.now())
 
     def __repr__(self):
-        return f"Weather in {self.city}: {self.condition}, {self.temperature}C (feels like)" \
-               f" {self.feels_like}, wind speed {self.wind_speed} with humidity: {self.humidity}." \
-               f" Data since {self.created_at.strftime('dd/MM/YY HH:mm')}."
+        return f"Weather in {self.city}: {self.condition}, {self.temperature}C (feels like" \
+               f" {self.feels_like}C), wind speed {self.wind_speed} with humidity: {self.humidity}." \
+               f" Data since {self.created_at.strftime('%m/%d, %H:%M')}."
 
     def __str__(self):
         return repr(self)
@@ -43,9 +43,9 @@ class WeatherForecast(Base):
     created_at = Column(DateTime, default=datetime.now())
 
     def __repr__(self):
-        return f"Weather in {self.city}: {self.condition}, {self.temperature}C (feels like)" \
-               f" {self.feels_like} during the {self.when}, wind speed {self.wind_speed} with humidity: {self.humidity}." \
-               f" Data since {self.created_at.strftime('dd/MM/YY HH:mm')}."
+        return f"Weather in {self.city}: {self.condition}, {self.temperature}C (feels like" \
+               f" {self.feels_like}C) during the {self.when}, wind speed {self.wind_speed} with humidity: {self.humidity}." \
+               f" Data since {self.created_at.strftime('%m/%d, %H:%M')}."
 
     def __str__(self):
         return repr(self)
