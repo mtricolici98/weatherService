@@ -89,7 +89,7 @@ def receive_command(message_req: ViberMessageRequest):
                 logger.exceptiion(ex)
                 return get_init_loc(error=True)
     elif tracking_data and tracking_data == 'welcome':
-        if user_message.lower().strip() == '/start':
+        if message_req.message.text.lower().strip() == '/start':
             return get_init_loc()
     else:
         return get_welcome()

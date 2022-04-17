@@ -32,9 +32,9 @@ def get_coord_from_city(locationInfo):
 
 
 def get_location_from_viber_location(viber_message: LocationMessage):
-    return get_city_from_coord(viber_message.location.lat,
-                               viber_message.location.lon), \
-           viber_message.location.lat, viber_message.location.lon
+    return get_city_from_coord(viber_message.location.latitude,
+                               viber_message.location.longitude), \
+           viber_message.location.latitude, viber_message.location.longitude
 
 
 def get_location_from_viber_message(cityInfo: TextMessage):
