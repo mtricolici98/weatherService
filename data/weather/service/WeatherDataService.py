@@ -56,7 +56,8 @@ class WeatherDataService:
         except Exception as ex:
             weather = WeatherForecast(
                 city=city,
-                temperature=temp,
+                temperature_min=temp,
+                temperature_max=temp_max,
                 condition=condition,
                 humidity=humidity,
                 wind_speed=wind_speed,
