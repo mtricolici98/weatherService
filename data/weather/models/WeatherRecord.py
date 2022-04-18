@@ -21,7 +21,7 @@ class WeatherRecord(Base):
 
     def __repr__(self):
         return f"Weather in {self.city}:\n {self.condition}, {int(float(self.temperature))}C (feels like" \
-               f" {int(self.feels_like)}C). \n Wind speed {self.wind_speed}m/s with humidity: {self.humidity}%. \n" \
+               f" {int(float(self.feels_like))}C). \n Wind speed {self.wind_speed}m/s with humidity: {self.humidity}%. \n" \
                f" Data since {self.created_at.strftime('%m/%d, %H:%M')}."
 
     def __str__(self):
