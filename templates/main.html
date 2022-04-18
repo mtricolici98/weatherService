@@ -1,0 +1,35 @@
+<html>
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        background: #2280d2;
+    }
+</style>
+<body>
+<h1>Welcome to the weather app</h1>
+<br>
+<h2>For current weather see here</h2>
+<form method="get" action="/weather/current">
+    <label for="city">City Name</label><br>
+    <input type="text" id="city" name="city" value="Chisinau, MD"><br>
+    <input type="radio" id="json" name="format" value="json"
+           checked>
+    <label for="json">JSON</label>
+    <input type="radio" id="web" name="format" value="web">
+    <label for="web">Web</label>
+    <button type="submit">Check</button>
+</form>
+<br>
+<h2>For forecast weather see here</h2>
+<form method="get" action="/weather/forecast">
+    <label for="city">City Name</label><br>
+    <input type="text" id="city" name="city" value="Chisinau, MD"><br>
+    <input type="radio" id="json" name="format" value="json"
+           checked>
+    <label for="json">JSON</label>
+    <input type="radio" id="web" name="format" value="web">
+    <label for="web">Web</label>
+    <button type="submit">Check</button>
+</form>
+</body>
+</html>
