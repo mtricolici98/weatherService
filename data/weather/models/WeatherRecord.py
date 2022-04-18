@@ -30,7 +30,6 @@ class WeatherRecord(Base):
     def to_dict(self):
         return dict(
             city=self.city,
-            country=self.country,
             temperature=self.temperature,
             feels_like=self.feels_like,
             condition=self.condition,
