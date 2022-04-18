@@ -38,37 +38,32 @@ class WeatherDataService:
 
     def register_forecast(self, city, data):
         for_date = datetime.fromtimestamp(data['dt'])
-        for when in data['feels_like'].keys():
-            temp = data['temp'][when]
-            feels_like = data['feels_like'][when]
-            condition = f"{data['weather'][0]['main']}, {data['weather'][0]['description']}"
-            humidity = data['humidity']
-            wind_speed = data['wind_speed']
-            try:
-                existing = self.session.query(WeatherForecast).filter(
-                    (WeatherForecast.city == city) & (WeatherForecast.for_date == for_date.date()) & (
-                            WeatherForecast.when == when)
-                ).one()
-                existing.temperature = temp
-                existing.feels_like = feels_like
-                existing.condition = condition
-                existing.humidity = humidity
-                existing.wind_speed = wind_speed
-                existing.created_at = datetime.now()
-                self.session.add(existing)
-            except Exception as ex:
-                weather = WeatherForecast(
-                    city=city,
-                    when=when,
-                    temperature=temp,
-                    feels_like=feels_like,
-                    condition=condition,
-                    humidity=humidity,
-                    wind_speed=wind_speed,
-                    for_date=for_date.date(),
-                    created_at=datetime.now()
-                )
-                self.session.add(weather)
+        temp = data['temp']['min']
+        temp_max = data['temp']['max']
+        condition = f"{data['weather'][0]['main']}, {data['weather'][0]['description']}"
+        humidity = data['humidity']
+        wind_speed = data['wind_speed']
+        try:
+            existing = self.session.query(WeatherForecast).filter(
+                (WeatherForecast.city == city) & (WeatherForecast.for_date == for_date.date())).one()
+            existing.temperature_min = temp
+            existing.temperature_max = temp_max
+            existing.condition = condition
+            existing.humidity = humidity
+            existing.wind_speed = wind_speed
+            existing.created_at = datetime.now()
+            self.session.add(existing)
+        except Exception as ex:
+            weather = WeatherForecast(
+                city=city,
+                temperature=temp,
+                condition=condition,
+                humidity=humidity,
+                wind_speed=wind_speed,
+                for_date=for_date.date(),
+                created_at=datetime.now()
+            )
+            self.session.add(weather)
         self.session.commit()
 
     def get_within_15_minutes_from_db(self, city):
