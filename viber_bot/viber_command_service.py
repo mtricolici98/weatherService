@@ -36,7 +36,7 @@ def get_current_data(user_id):
     if not session_info:
         return get_init_loc()
     return TextMessage(
-        text=str(get_weather_current_data(session_info.city, session_info.lat, session_info.lon, session=Session)),
+        text=str(get_weather_current_data(session_info.city, session_info.lat, session_info.lon, session=db_session)),
         tracking_data='weather_info')
 
 
