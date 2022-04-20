@@ -20,4 +20,4 @@ app.register_blueprint(viber_bot_blueprint)
 @app.before_first_request
 def init_webhook():
     Base.metadata.create_all()
-#     set_webhook()
+    set_webhook()
