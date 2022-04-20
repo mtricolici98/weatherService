@@ -2,9 +2,11 @@ import requests
 from viberbot.api.messages import LocationMessage, TextMessage
 
 from conf import WEATHER_API_KEY
+from logger import logger
 
 
 def find_location_by_ip(ip_addr):
+    logger.info(f"Using {ip_addr} for location")
     return get_location_by_ip_addr(ip_addr)
 
 
