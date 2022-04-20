@@ -16,7 +16,7 @@ def register_location(message_req: ViberMessageRequest):
             lss.register_user_session(message_req.sender.id, *info)
             return get_menu()
         except Exception as ex:
-            logger.exceptiion(ex)
+            logger.error(ex)
             return get_init_loc(error=True)
     elif isinstance(message_req.message, LocationMessage):
         try:
@@ -25,7 +25,7 @@ def register_location(message_req: ViberMessageRequest):
             lss.register_user_session(message_req.sender.id, *info)
             return get_menu()
         except Exception as ex:
-            logger.exceptiion(ex)
+            logger.error(ex)
             return get_init_loc(error=True)
 
 
