@@ -36,7 +36,10 @@ def get_coord_from_city(locationInfo):
     url = f'http://api.openweathermap.org/geo/1.0/direct?q={locationInfo}&appid={WEATHER_API_KEY}'
     data = requests.get(url)
     info = data.json()
-    return info[0]['name'], info[0]['lat'], info[0]['lon']
+    try:
+        return info[0]['name'], info[0]['lat'], info[0]['lon']
+    except Exception as ex:
+        raise Exception(f'Could not find location for the following query {locationInfo}. Try to be more specific')
 
 
 def get_location_from_viber_location(viber_message: LocationMessage):
