@@ -5,6 +5,10 @@ from conf import WEATHER_API_KEY
 from logger import logger
 
 
+class IpLocationNotFound(Exception):
+    pass
+
+
 def find_location_by_ip(ip_addr):
     logger.info(f"Using {ip_addr} for location")
     return get_location_by_ip_addr(ip_addr)
@@ -14,6 +18,8 @@ def get_location_by_ip_addr(ip_addr):
     url = f'http://ip-api.com/json/{ip_addr}'
     data = requests.get(url)
     info = data.json()
+    if info.get('status') == 'fail':
+        raise IpLocationNotFound(f'Could not find location for IP {ip_addr}')
     location_info = ", ".join([info.get('city'), info.get('country')])
     return location_info, info.get('lat'), info.get('lon')
 

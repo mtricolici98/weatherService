@@ -6,6 +6,7 @@ from flask import request, Response, Blueprint, render_template
 
 from data.database import Session
 from data.weather.models.WeatherRecord import WeatherRecord, WeatherForecast
+from flask_utils.exception_handler_decorator import flask_return_err_if_exception
 from templates.icon_map import CONDITION_TO_ICON_MAP_DAY, CONDITION_TO_ICON_MAP_NIGH
 from weather.service.location_service import get_coord_from_city, find_location_by_ip
 from weather.service.weather_service import get_weather_current_data, get_weather_forecast_data
@@ -44,6 +45,7 @@ def render_forecast(forecast_data: Collection[WeatherForecast]):
 
 
 @weather_data_blueprint.route('/weather/current')
+@flask_return_err_if_exception
 def get_current_weather():
     if request.args.get('city'):
         coord = get_coord_from_city(request.args.get('city'))
@@ -59,6 +61,7 @@ def get_current_weather():
 
 
 @weather_data_blueprint.route('/weather/forecast')
+@flask_return_err_if_exception
 def get_forecast_weather():
     if request.args.get('city'):
         coord = get_coord_from_city(request.args.get('city'))
