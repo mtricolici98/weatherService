@@ -18,4 +18,4 @@ It should have the following structure:
 
 ## Deploying viber bot
 
-Please change the URL inside the `viber_bot.py` file to match your URL. 
+Please change the URL inside the `viber.py` file to match your URL. 
