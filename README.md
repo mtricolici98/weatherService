@@ -14,3 +14,8 @@ It should have the following structure:
   "DATABASE_URL": "YOUR_DB_INFO"
 }
 ```
+
+
+## Deploying viber bot
+
+Please change the URL inside the `viber_bot.py` file to match your URL. 
